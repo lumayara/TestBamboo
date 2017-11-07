@@ -26,7 +26,9 @@
     <target name="rebuild" depends="clean, build" description="calls clean and build" />
     
     <target name="build.app1" description="executes msbuild">
-        <echo message='Build application'/>        
-        <exec program="${msbuild}" commandline='TestHelloWorld/TestHelloWorld.csproj /p:Configuration=Release;OutDir=${directory::get-current-directory()}/TestHelloWorld/bin/'/> 
+        <exec program="${environment::get-variable('SYSTEMROOT')}\Microsoft.Net\Framework64\v4.0.30319\msbuild.exe">
+            <arg value="TestHelloWorld/TestHelloWorld.csproj" />
+            <arg value="/p:configuration=release;OutDir=${directory::get-current-directory()}/TestHelloWorld/bin/"/>
+        </exec>> 
     </target>   
 </project>
