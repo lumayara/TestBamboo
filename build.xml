@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="HelloWorld" default="create-release" xmlns="http://nant.sf.net/release/0.92/nant.xsd">
+
+  <!--
+	############################################################################################
+	Global Properties
+	############################################################################################
+	-->
+  <!-- <include buildfile="${env_config_file}"/> -->
+
+  <property name="app.webui.bin" value="HelloWorld\bin"/>
+  <property name="output.dir" value="${appname}release\HelloWorld" />
+  <property name="app.release" value="${appname}release" />
+
+  <target name="create-release" depends="clean-release, init-release"  description="Creates a release for the ${appname}">
+    <!--<echo message="This is the AppPool ${AppPool}"/>-->
+    <echo message="Create Release"  />
+    <call target="create-expert-release"  />
+
+  </target>
+
+  <target name="clean-release" description="Deletes the application release folder">
+    <echo message="Clean Release"  />
+
+    <delete dir="${app.release}" failonerror="false"/>
+    <echo message="Deleted ${app.release} folder" />
+
+  </target>
+
+  <target name="init-release" description="creates the empty release folder structure" >
+
+    <echo message="init-release"  />
+
+    <mkdir dir="${app.release}" verbose="${verbose}" />
+    <echo message="Created ${app.release} folder structure " />
+
+  </target>
+
+  <target name="create-expert-release" description="Creates the release for ${appname} tool">
+    <echo message="Ready to invoke the build target "/>
+    <call target="build-release"/>
+
+    <echo message="Ready to update the ${appname}release   ${app.webui.src}"/>
+
+    <!-- copy files to the output directory -->
+   <echo message="to directory   {output.dir}"/>
+   
+   
+    <copy todir="${output.dir}" includeemptydirs="false">
+      <fileset basedir="HelloWorld">
+        <exclude name="obj/**" />
+      </fileset>
+    </copy>
+<!--    <call target="copy-web-config" /> -->
+    </target>
+
+  <!--
+	############################################################################################
+	build-release - called by the create-release target in the form470 global build file
+	############################################################################################
+	-->
+
+  <target name="build-release" depends="init-release" description="Compile the code with the release configuration">
+    <echo message="${environment::get-variable('SYSTEMROOT')}"/>
+    <exec program="${environment::get-variable('SYSTEMROOT')}\Microsoft.Net\Framework64\v4.0.30319\msbuild.exe">
+      <arg value="HelloWorld.sln" />
+      <arg value="/p:configuration=release"/>
+      <arg value="/p:Platform=Any CPU"/>
+      <arg value="/p:VisualStudioVersion=12.0"/>
+    </exec>
+
+    <echo message="Completed ${appname} with release configuration"/>
+  </target>
+
+
+
+
+  <!--
+	############################################################################################
+	build-debug - used by the checkinbuild 
+	############################################################################################
+	-->
+  <target name="build-debug" depends="init-local" description="Compile the Form470 expert code with the debug configuration">
+
+
+    <exec program="${environment::get-variable('SYSTEMROOT')}\Microsoft.Net\Framework64\v4.0.30319\msbuild.exe">
+      <arg value="$HelloWorld.sln" />
+      <arg value="/p:configuration=debug"/>
+    </exec>
+    <echo message="Completed ${appname} with debug configuration"/>
+  </target>
+
+  <!--Update me -->
+  <target name="init-local" depends="clean" description="Set up the environment for the build">
+
+    <property name="output.dir" value="${app.webui.src}" />
+    <!-- <call target="copy-web-config" /> -->
+  </target>
+
+  <!--Update me -->
+  <!-- <target name="copy-web-config" description="copies the config file after replacing the tokens"> 
+
+    <copy todir="${output.dir}" overwrite="true">
+      <fileset basedir="etc\Configs">
+        <include name="Web.config"/>
+      </fileset>
+
+      <filterchain>
+        <replacetokens>
+          <token key="SLStageEntities" value="${SLStageEntities}" />
+	  <token key="FilePath" value="${FilePath}"/>         
+	  <token key="UserGuidePath" value="${UserGuidePath}"/> 
+	  <token key="Environment" value="${Environment}"/>          
+          <token key="HelloWorldURL" value="${HelloWorldURL}"/>
+          <token key="ServerName"  value="${ServerName}"/>
+          <token key="RequireHttps" value="${RequireHttps}"/>
+          <token key="RequireSsl" value="${RequireSsl}"/>	  
+        </replacetokens>
+      </filterchain>
+    </copy>
+
+  </target>-->
+ 
+  <!--
+    ############################################################################################
+    clean - deletes the bin directories
+    ############################################################################################
+    -->
+  <target name="clean" description="Delete the output files">
+    <delete dir="${app.webui.bin}" failonerror="false"/>
+
+  </target>
+
+  <!--
+	############################################################################################
+	Help - Description of targets
+	############################################################################################
+	-->
+  <target name="help"  description="Description of targets"  >
+    <echo message="------------------------ Help -------------------------------------" />
+    <echo message="clean ----------- Deletes the bin output directories." />
+    <echo message="init-local ----------- Copies the necessary config files in the application for local development." />
+    <echo message="init-release ----------- Copies the necessary config files for the release." />
+    <echo message="build-release -------- Builds the project with release configuration (uses init-release)." />
+    <echo message="build-debug ----------- Builds the project with debug configuration (uses init-local)." />
+    <echo message="init-release ----------- Creates the application's release folder." />
+    <echo message="clean-release ----------- Delete the application's release folder." />
+    <echo message="create-release --------  Creates the release folder that will be used in the server." />
+  </target>
+
+
+
+</project>
