@@ -27,6 +27,6 @@
     
     <target name="build.app1" description="executes msbuild">
         <echo message='Build application'/>        
-        <exec program="${msbuild}" commandline='"TestHelloWorld/TestHelloWorld.csproj" /v:n /t:Build /p:Configuration=${configuration};OutDir=${directory::get-current-directory()}/TestHelloWorld/bin/' /> 
+        <exec program="${msbuild}" commandline='"TestHelloWorld/TestHelloWorld.csproj" /p:Platform=Any CPU /p:Configuration=${configuration};OutDir=${directory::get-current-directory()}/TestHelloWorld/bin/' /> 
     </target>   
 </project>
