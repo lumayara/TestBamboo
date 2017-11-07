@@ -20,3 +20,5 @@ C:\Users\luana.fernandes\source\repos\TestHelloWorld\TestHelloWorld.Tests\obj\De
 C:\Users\luana.fernandes\source\repos\TestHelloWorld\TestHelloWorld.Tests\obj\Debug\TestHelloWorld.Tests.csproj.CoreCompileInputs.cache
 C:\Users\luana.fernandes\source\repos\TestHelloWorld\TestHelloWorld.Tests\obj\Debug\TestHelloWorld.Tests.dll
 C:\Users\luana.fernandes\source\repos\TestHelloWorld\TestHelloWorld.Tests\obj\Debug\TestHelloWorld.Tests.pdb
+C:\Users\luana.fernandes\Documents\GitHub\TestBamboo\TestHelloWorld.Tests\obj\Debug\TestHelloWorld.Tests.dll
+C:\Users\luana.fernandes\Documents\GitHub\TestBamboo\TestHelloWorld.Tests\obj\Debug\TestHelloWorld.Tests.pdb

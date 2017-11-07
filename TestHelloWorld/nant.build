@@ -1,0 +1,32 @@
+<project name="HelloWorld" default="rebuild">
+
+    <property name="configuration" value="release" />
+    <property name="bin-directory" value="${directory::get-current-directory()}/bin/" />
+    ##<property name="msbuild" value="${framework::get-framework-directory(framework::get-target-framework())}\MSBuild.exe" /> ##
+    <property name="msbuild" value="${environment::get-variable('SYSTEMROOT')}\Microsoft.Net\Framework64\v4.0.30319\msbuild.exe" /> 
+    
+    <target name="clean" description="the fileset is where includes all files that will be deleted">
+    <echo message='Delete all previous compiled projects'/>
+        <delete>
+            <fileset>
+                <include name="**/bin/**" />
+                <include name="**/obj/**" />
+                <include name="**/*.suo" />
+                <include name="**/*.user" />
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="build" description="mkdir to create a new folder bin and call the target">
+        <echo message='Build what is in the target tag'/>
+        <mkdir dir="${bin-directory}" />
+        <call target="build.app1" /> 
+    </target>
+
+    <target name="rebuild" depends="clean, build" description="calls clean and build" />
+    
+    <target name="build.app1" description="executes msbuild">
+        <echo message='Build application'/>        
+        <exec program="${msbuild}" commandline='"TestHelloWorld.csproj" /v:n /nolcmdogo /t:Build /p:Configuration=${configuration};OutDir=${directory::get-current-directory()}/bin/"' /> 
+    </target>   
+</project>
