@@ -1,8 +1,8 @@
 <project name="HelloWorld" default="rebuild">
 
     <property name="configuration" value="release" />
-    <property name="bin-directory" value="${directory::get-current-directory()}/bin/" />
-    ##<property name="msbuild" value="${framework::get-framework-directory(framework::get-target-framework())}\MSBuild.exe" /> ##
+    <property name="bin-directory" value="${directory::get-current-directory()}/TestHelloWorld/bin/" />
+    <!--<property name="msbuild" value="${framework::get-framework-directory(framework::get-target-framework())}\MSBuild.exe" /> ## -->
     <property name="msbuild" value="${environment::get-variable('SYSTEMROOT')}\Microsoft.Net\Framework64\v4.0.30319\msbuild.exe" /> 
     
     <target name="clean" description="the fileset is where includes all files that will be deleted">
@@ -27,6 +27,6 @@
     
     <target name="build.app1" description="executes msbuild">
         <echo message='Build application'/>        
-        <exec program="${msbuild}" commandline='"TestHelloWorld.csproj" /v:n /t:Build /p:Configuration=${configuration};OutDir=${directory::get-current-directory()}/bin/' /> 
+        <exec program="${msbuild}" commandline='"TestHelloWorld/TestHelloWorld.csproj" /v:n /t:Build /p:Configuration=${configuration};OutDir=${directory::get-current-directory()}/TestHelloWorld/bin/' /> 
     </target>   
 </project>
