@@ -24,11 +24,26 @@
     </target>
 
     <target name="rebuild" depends="clean, build" description="calls clean and build" />
+
+    <target name="test" description="unit testing">
+        <mkdir dir="${bin-directory}" />
+        <call target="build.tests" /> 
+        <nunit2>
+            <test assemblyname="${bin-directory}/Test.dll" />
+        </nunit2>
+    </target>
     
     <target name="build.app1" description="executes msbuild">
         <exec program="${environment::get-variable('SYSTEMROOT')}\Microsoft.Net\Framework64\v4.0.30319\msbuild.exe">
             <arg value="TestHelloWorld/TestHelloWorld.csproj" />
             <arg value="/p:configuration=release;OutDir=${directory::get-current-directory()}/TestHelloWorld/bin/"/>
-        </exec>> 
-    </target>   
+        </exec>
+    </target>  
+
+    <target name="build.tests" description="executes test">
+        <exec program="${environment::get-variable('SYSTEMROOT')}\Microsoft.Net\Framework64\v4.0.30319\msbuild.exe">
+            <arg value="TestHelloWorld.Tests/TestHelloWorld.Tests.csproj" />
+            <arg value="/p:configuration=release;OutDir=${directory::get-current-directory()}/TestHelloWorld/bin/"/>
+        </exec>
+    </target>  
 </project>
