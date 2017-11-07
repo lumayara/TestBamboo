@@ -7,7 +7,7 @@
 	############################################################################################
 	-->
   <!-- <include buildfile="${env_config_file}"/> -->
-
+  <property name="appname" value="HelloWorld"/>
   <property name="app.webui.bin" value="HelloWorld\bin"/>
   <property name="output.dir" value="${appname}release\HelloWorld" />
   <property name="app.release" value="${appname}release" />
